@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Title: {{ blog.title }}</h1>
+
+  <p><strong>Author:</strong> <a href="{% url 'author-detail' blog.author.id %}">{{ blog.author }}</a></p>
+  <!-- author detail link not yet defined -->
+  <p><strong>Date posted:</strong> {{ blog.post_date }}</p>
+  <p><strong>Content:</strong></p>
+  <div style="margin-left:20px;margin-top:20px">
+    <p>{{ blog.content }}</p>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {{ block.super }}
+
+  {% if perms.catalog.change_blog or perms.catalog.delete_blog %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.catalog.change_blog %}
+      <li><a href="{% url 'blog-update' blog.id %}">Update blog</a></li>
+    {% endif %}
+    {% if perms.catalog.delete_blog %}
+      <li><a href="{% url 'blog-delete' blog.id %}">Delete blog</a></li>
+    {% endif %}
+    </ul>
+  {% endif %}
+
+{% endblock %}
