@@ -31,10 +31,10 @@ class Author(models.Model):
         return reverse('author-detail', args = [str(self.id)])
     
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null= True)
     blog = models.ForeignKey(Blog, on_delete=models.RESTRICT, null = True)
-    comment_body = models.CharField(max_length = 200, help_text = 'Enter your comment')
-    post_date = models.DateField(auto_now = True)
+    comment_body = models.TextField(help_text = 'Enter your comment')
+    post_datetime = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return f'Comment Id - {self.id}, User - {self.user}'

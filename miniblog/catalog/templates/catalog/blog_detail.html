@@ -7,24 +7,19 @@
   <!-- author detail link not yet defined -->
   <p><strong>Date posted:</strong> {{ blog.post_date }}</p>
   <p><strong>Content:</strong></p>
-  <div style="margin-left:20px;margin-top:20px">
+  <div>
     <p>{{ blog.content }}</p>
   </div>
-{% endblock %}
-
-{% block sidebar %}
-  {{ block.super }}
-
-  {% if perms.catalog.change_blog or perms.catalog.delete_blog %}
-  <hr>
-  <ul class="sidebar-nav">
-    {% if perms.catalog.change_blog %}
-      <li><a href="{% url 'blog-update' blog.id %}">Update blog</a></li>
-    {% endif %}
-    {% if perms.catalog.delete_blog %}
-      <li><a href="{% url 'blog-delete' blog.id %}">Delete blog</a></li>
-    {% endif %}
-    </ul>
-  {% endif %}
-
+  <div style="margin-left:20px;margin-top:20px">
+    <p><strong>Comments</strong></p>
+        <hr>
+        {% for comment in blog.comment_set.all %}
+            <p style="margin-bottom:20px;margin-top:20px">{{ comment.user }} ({{ comment.post_datetime }}) - {{ comment.comment_body }}</p>
+            <hr>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'comment-create' blog.id %}">Add a new comment</a>
+        {% endif %}
+  </div>
+  
 {% endblock %}
