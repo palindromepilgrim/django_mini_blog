@@ -26,7 +26,6 @@
               <hr>
               {% if user.is_authenticated %}
                 <li>User: {{ user.get_username }}</li>
-                <li><a href="{% url 'my-blogs' %}">My Blogs</a></li>
                 <li>
                   <form id="logout-form" method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
